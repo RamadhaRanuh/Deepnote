@@ -29,10 +29,9 @@ This project will deliver a web application with the following key features:
 * **(Other libraries as needed for vector databases, embeddings, etc.)**
 
 ## Documentation (Tentative)
+**Version 0.1 (Initial Setup):**  Project initialization and basic structure.
 
-* **Version 0.1 (Initial Setup):**  Project initialization and basic structure.
-
-## Version 0.2 (Model Completion & Deployment):**  Finished the core RAG model and deployed the application using Streamlit.
+**Version 0.2 (Model Completion & Deployment):**  Finished the core RAG model and deployed the application using Streamlit.
 ![Screenshot 2025-02-05 232033](https://github.com/user-attachments/assets/229171b3-31d5-4d7a-8ad0-893973f97e87)
 
-## Version 0.3 (Feature Enhancement & Testing):** Added a success notification when data has been successfully indexed. Implemented a test RAG module for evaluating retrieval performance.  This allows for more rigorous testing and ensures the retrieval component is functioning correctly.
+**Version 0.3 (Feature Enhancement & Testing):** Added a success notification when data has been successfully indexed. Implemented a test RAG module for evaluating retrieval performance.  This allows for more rigorous testing and ensures the retrieval component is functioning correctly.
