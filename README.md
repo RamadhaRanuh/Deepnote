@@ -1,4 +1,4 @@
-# PDF and Website Chatbot with Retrieval Augmented Generation (RAG)
+![Screenshot 2025-02-06 182859](https://github.com/user-attachments/assets/a6994d82-9670-43c6-b7cd-b5a3da542f1e)# PDF and Website Chatbot with Retrieval Augmented Generation (RAG)
 
 This project aims to build a powerful chatbot capable of understanding and responding to information extracted from both PDF files and websites.  It leverages Retrieval Augmented Generation (RAG) to provide accurate and contextually relevant answers, addressing the limitations of traditional chatbot approaches.
 
@@ -35,3 +35,11 @@ This project will deliver a web application with the following key features:
 ![Screenshot 2025-02-05 232033](https://github.com/user-attachments/assets/229171b3-31d5-4d7a-8ad0-893973f97e87)
 
 **Version 0.3 (Feature Enhancement & Testing):** Added a success notification when data has been successfully indexed. Implemented a test RAG module for evaluating retrieval performance.  This allows for more rigorous testing and ensures the retrieval component is functioning correctly.
+
+**Version 0.4 (Combined Retrieval & Web Testing):** Combined Web and PDF retrieval into a unified system. Added a dedicated Web Retrieval Testing File to specifically test and refine the web retrieval component, ensuring its accuracy and efficiency.
+![Screenshot 2025-02-06 182859](https://github.com/user-attachments/assets/432fce7a-4250-4333-87c0-f4510f162fe6)
+![Screenshot 2025-02-06 183434](https://github.com/user-attachments/assets/46f00a60-af41-43aa-b4aa-55e4fd8db88e)
+
+
+
+
