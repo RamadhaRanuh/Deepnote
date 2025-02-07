@@ -1,3 +1,4 @@
+Current State:
 ![Screenshot 2025-02-06 182859](https://github.com/user-attachments/assets/a6994d82-9670-43c6-b7cd-b5a3da542f1e)
 
 # PDF and Website Chatbot with Retrieval Augmented Generation (RAG)
