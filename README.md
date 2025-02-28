@@ -3,7 +3,7 @@ Current State:
 
 # PDF and Website Chatbot with Retrieval Augmented Generation (RAG)
 
-This project aims to build a powerful chatbot capable of understanding and responding to information extracted from both PDF files and websites.  It leverages Retrieval Augmented Generation (RAG) to provide accurate and contextually relevant answers, addressing the limitations of traditional chatbot approaches.
+This project aims to build a powerful chatbot capable of understanding and responding to information extracted from PDF files and websites.  It leverages Retrieval Augmented Generation (RAG) to provide accurate and contextually relevant answers, addressing the limitations of traditional chatbot approaches.
 
 ## Current Issues & Motivation
 
