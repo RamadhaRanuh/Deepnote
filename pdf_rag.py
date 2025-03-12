@@ -5,6 +5,12 @@ from typing import List
 
 import requests
 
+from nltk.tokenize import word_tokenize as word_tokenizer
+import concurrent.futures
+
+from youtube_transcript_api import YouTubeTranscriptApi
+from pytube import YouTube
+
 from langchain_community.document_loaders import PDFPlumberLoader, SeleniumURLLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.vectorstores import InMemoryVectorStore
@@ -13,9 +19,9 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_ollama.llms import OllamaLLM
 from langchain_core.documents import Document
 from langchain_community.retrievers import BM25Retriever
-from nltk.tokenize import word_tokenize as word_tokenizer
 from langchain.retrievers import EnsembleRetriever
-import concurrent.futures
+
+
 
 distilled_template = """
 DOCUMENT:
@@ -87,6 +93,61 @@ class DocumentProcessor:
             fixed_doc = Document(page_content=text, metadata={"source": url})
             fixed_docs.extend(self.text_splitter.split_documents([fixed_doc]))
         return fixed_docs
+    
+    def load_youtube(self, url: str) -> List[Document]:
+        """Load content from a YouTube video, extract transcript and create a Document"""
+
+        try:
+            video_id_match = re.search(r'(?:v=|\/)([0-9A-Za-z_-]{11}).*', url)
+            if not video_id_match:
+                return []
+            video_id = video_id_match.group(1)
+            title = self.get_youtube_title(url, video_id)
+
+            # Get transcript
+            transcript_list = YouTubeTranscriptApi.get_transcript(video_id)
+            full_transcript = " ".join([entry["text"] for entry in transcript_list])
+
+            doc = Document(
+                page_content = full_transcript,
+                metadata={
+                    "source": url,
+                    "title": title,
+                    "type": "youtube_transcript"
+                }
+            )
+
+            split_docs = self.text_splitter.split_documents([doc])
+            return split_docs
+        except Exception as e:
+            st.error(f"Error loading YouTube video: {str(e)}")
+            return []
+        
+    def get_youtube_title(self, url: str, video_id: str) -> str:
+        """Get YouTube video title using multiple fallback methods"""
+        
+        # Method 1: Try using pytube
+        try:
+            yt = YouTube(url)
+            return yt.title
+        except Exception:
+            pass
+        
+        # Method 2: Use requests to get page metadata
+        try:
+            response = requests.get(f"https://www.youtube.com/watch?v={video_id}")
+            if response.status_code == 200:
+                title_match = re.search(r'<title>(.*?)</title>', response.text)
+                if title_match:
+                    title = title_match.group(1)
+                    # Clean up title (remove " - YouTube" suffix)
+                    title = re.sub(r'\s*-\s*YouTube\s*$', '', title)
+                    return title
+        except Exception:
+            pass
+        
+        # Fallback: Use video ID as title
+        return f"YouTube Video {video_id}"
 
     def clean_text(self, text: str) -> str:
         """Enhanced text cleaning for PDF and URL content"""
@@ -124,6 +185,17 @@ class DocumentProcessor:
     def process_url(self, url: str) -> List[Document]:
         """Complete URL processing pipeline"""
         docs = self.load_url(url)
+        processed_docs = []
+        for doc in docs:
+            cleaned_content = self.clean_text(doc.page_content)
+            doc.page_content = cleaned_content
+            if cleaned_content.strip():
+                processed_docs.append(doc)
+        return processed_docs
+    
+    def process_youtube(self, url: str) -> List[Document]:
+        """Complete YouTube processing pipeline"""
+        docs = self.load_youtube(url)
         processed_docs = []
         for doc in docs:
             cleaned_content = self.clean_text(doc.page_content)
@@ -184,10 +256,10 @@ class DocumentProcessor:
 
 # Streamlit interface
 def main():
-    st.title("PDF/URL Question Answering System")
+    st.title("PDF/URL/Youtube Question Answering System")
     
-    st.sidebar.title("Article URL/File")
-    input_type = st.sidebar.radio("Choose Input Type", ["URL", "PDF"])
+    st.sidebar.title("Content Source")
+    input_type = st.sidebar.radio("Choose Input Type", ["URL", "PDF", "Youtube"])
     
     processor = DocumentProcessor()
     
@@ -217,6 +289,20 @@ def main():
                     docs = processor.process_pdf(str(file_path))
                     all_documents.extend(docs)
                     st.sidebar.write(f"File indexed: {uploaded_file.name}")
+
+    elif input_type == "Youtube":
+        youtube_urls = []
+        for i in range(3):
+            youtube_url = st.sidebar.text_input(f"Youtube URL {i+1}")
+            if youtube_url:
+                youtube_urls.append(youtube_url)
+
+        if youtube_urls:
+            for youtube_url in youtube_urls:
+                with st.spinner(f"Processing Youtube video: {youtube_url}"):
+                    docs = processor.process_youtube(youtube_url)
+                    all_documents.extend(docs)
+                    st.sidebar.write(f"Youtube video indexed: {youtube_url}")
     
     # Index all collective documents if any
     if all_documents:
@@ -246,7 +332,14 @@ def main():
                 for i, doc in enumerate(relevant_docs, 1):
                     st.markdown(f"**Document {i}**")
                     st.text(doc.page_content)
-                    st.markdown(f"*Source: {doc.metadata.get('source', 'Not specified')}*")
+                    source = doc.metadata.get('source', 'Not specified')
+                    doc_type = doc.metadata.get('type', '')
+
+                    if doc_type == 'youtube_transcript':
+                        video_title = doc.metadata.get('title', 'Youtube Video')
+                        st.markdown(f"*Source: [{video_title}]({source}) (Youtube Transcript*")
+                    else:
+                        st.markdown(f"*Source: {source}*")
                     st.markdown("---")
 
 if __name__ == "__main__":
