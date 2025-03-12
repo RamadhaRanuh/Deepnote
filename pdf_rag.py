@@ -12,7 +12,9 @@ from langchain_ollama import OllamaEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_ollama.llms import OllamaLLM
 from langchain_core.documents import Document
-
+from langchain_community.retrievers import BM25Retriever
+from nltk.tokenize import word_tokenize as word_tokenizer
+from langchain.retrievers import EnsembleRetriever
 import concurrent.futures
 
 distilled_template = """
@@ -47,8 +49,7 @@ Response should be clear and direct, citing specific parts of the context.
 pdfs_directory = Path('./pdf/')
 pdfs_directory.mkdir(exist_ok=True)
 
-embeddings = OllamaEmbeddings(model="deepseek-r1:8b")
-vector_store = InMemoryVectorStore(embeddings)
+
 
 llm = OllamaLLM(model="deepseek-r1:8b")
 
@@ -56,11 +57,15 @@ class DocumentProcessor:
     def __init__(self):
         self.answer_prompt = ChatPromptTemplate.from_template(answer_template)
         self.text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=500,
-            chunk_overlap=100,
+            chunk_size=1000,
+            chunk_overlap=200,
             separators=["\n\n", "\n", ".", "!", "?", ",", " "],
             add_start_index=True
         )
+        self.vector_store = None    
+        self.bm25_retriever_obj = None
+        self.semantic_retriever_obj = None
+        self.ensemble_retriever_obj = None
 
     def load_pdf(self, file_path: str) -> List[Document]:
         """Load PDF and split into chunks"""
@@ -109,13 +114,11 @@ class DocumentProcessor:
             processed_docs = list(filter(None, executor.map(process_doc, docs)))
 
         # Process documents sequentially
-        """
-        for doc in docs:
-            cleaned_content = self.clean_text(doc.page_content)
-            doc.page_content = cleaned_content
-            if cleaned_content.strip():
-                processed_docs.append(doc)
-        """
+        # for doc in docs:
+        #   cleaned_content = self.clean_text(doc.page_content)
+        #    doc.page_content = cleaned_content
+        #    if cleaned_content.strip():
+        #        processed_docs.append(doc)
         return processed_docs
 
     def process_url(self, url: str) -> List[Document]:
@@ -129,14 +132,35 @@ class DocumentProcessor:
                 processed_docs.append(doc)
         return processed_docs
 
-    def index_documents(self, documents: List[Document]):
+    def semantic_retriever(self, documents: List[Document]):
         """Index processed documents in vector store"""
-        vector_store.add_documents(documents)
+        embeddings = OllamaEmbeddings(model="deepseek-r1:8b")
+        self.vector_store = InMemoryVectorStore(embeddings)
+        self.vector_store.add_documents(documents)
+        self.semantic_retriever_obj = self.vector_store.as_retriever(search_kwargs={"k":5})
+
+        return self.semantic_retriever_obj
     
-    def retrieve_relevant_docs(self, query: str, k: int = 3) -> List[Document]:
+    def bm25_retriever(self, documents: List[Document]):
+        self.bm25_retriever_obj = BM25Retriever.from_documents(documents, preprocess_func=word_tokenizer)
+        return self.bm25_retriever_obj
+    
+    def create_hybrid_retriever(self, semantic_weight=0.5, bm25_weight=0.5):
+        if self.vector_store is None or self.bm25_retriever_obj is None:
+            return None
+        
+        self.ensemble_retriever_obj = EnsembleRetriever(
+            retrievers=[self.semantic_retriever_obj, self.bm25_retriever_obj],
+            weight=[semantic_weight, bm25_weight]
+        )
+        return self.ensemble_retriever_obj
+    
+    def retrieve_relevant_docs(self, query: str, k: int = 5) -> List[Document]:
         """Retrieve relevant documents with similarity search"""
-        docs = vector_store.similarity_search(query, k=k)
-        return docs
+        if self.ensemble_retriever_obj:
+            return self.ensemble_retriever_obj.get_relevant_documents(query)
+        else:
+            return []
     
     def answer_question(self, question: str, documents: List[Document]) -> str:
         """Generate answer using retrieved documents"""
@@ -196,7 +220,9 @@ def main():
     
     # Index all collective documents if any
     if all_documents:
-        processor.index_documents(all_documents)
+        processor.semantic_retriever(all_documents)
+        processor.bm25_retriever(all_documents)
+        processor.create_hybrid_retriever(semantic_weight=0.5, bm25_weight=0.5)
         st.success("All documents processed and indexed!")
         
     
@@ -213,7 +239,15 @@ def main():
             if thinking:
                 with st.expander("View thinking process"):
                     st.markdown(thinking)
-            
+
+            # Collapsible section for thinking process
+            with st.expander("View Retrieved Documents", expanded=False):
+                st.markdown("### Retrieved Documents")
+                for i, doc in enumerate(relevant_docs, 1):
+                    st.markdown(f"**Document {i}**")
+                    st.text(doc.page_content)
+                    st.markdown(f"*Source: {doc.metadata.get('source', 'Not specified')}*")
+                    st.markdown("---")
 
 if __name__ == "__main__":
     main()
