@@ -13,6 +13,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_ollama.llms import OllamaLLM
 from langchain_core.documents import Document
 
+import concurrent.futures
 
 distilled_template = """
 DOCUMENT:
@@ -96,11 +97,25 @@ class DocumentProcessor:
         """Complete PDF processing pipeline"""
         docs = self.load_pdf(file_path)
         processed_docs = []
+
+        # Process documents in parallel
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            def process_doc(doc):
+                cleaned_content = self.clean_text(doc.page_content)
+                doc.page_content = cleaned_content
+                if cleaned_content.strip():
+                    return doc
+                return None
+            processed_docs = list(filter(None, executor.map(process_doc, docs)))
+
+        # Process documents sequentially
+        """
         for doc in docs:
             cleaned_content = self.clean_text(doc.page_content)
             doc.page_content = cleaned_content
             if cleaned_content.strip():
                 processed_docs.append(doc)
+        """
         return processed_docs
 
     def process_url(self, url: str) -> List[Document]:
@@ -127,8 +142,21 @@ class DocumentProcessor:
         """Generate answer using retrieved documents"""
         context = "\n\n".join([doc.page_content for doc in documents])
         chain = self.answer_prompt | llm
-        return chain.invoke({"question": question, "context": context})
+        summary = chain.invoke({"question": question, "context": context})
+        clean_content, thinking = self.clean_thinking(summary)
+        return clean_content, thinking
+    
+    def clean_thinking(self, text: str) -> str:
+        """Clean thinking process text"""
 
+        thinking = ""
+        thinking_match = re.search(r"<think>(.*?)</think>", text, flags=re.DOTALL)
+        if thinking_match:
+            thinking = thinking_match.group(1).strip()
+
+        text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL)
+        text = re.sub(r"\n{3,}", "\n\n", text)
+        return text.strip(), thinking
 
 # Streamlit interface
 def main():
@@ -170,6 +198,7 @@ def main():
     if all_documents:
         processor.index_documents(all_documents)
         st.success("All documents processed and indexed!")
+        
     
     # Question answering interface
     question = st.chat_input("Ask a question about the documents")
@@ -177,8 +206,14 @@ def main():
         st.chat_message("user").write(question)
         with st.spinner("Searching and analyzing..."):
             relevant_docs = processor.retrieve_relevant_docs(question)
-            answer = processor.answer_question(question, relevant_docs)
+            answer, thinking = processor.answer_question(question, relevant_docs)
             st.chat_message("assistant").write(answer)
+
+            # Collapsible section for thinking process
+            if thinking:
+                with st.expander("View thinking process"):
+                    st.markdown(thinking)
+            
 
 if __name__ == "__main__":
     main()
