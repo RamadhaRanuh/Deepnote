@@ -251,20 +251,71 @@ class DocumentProcessor:
             thinking = thinking_match.group(1).strip()
 
         text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL)
+        text = re.sub(r"</?think>", "", text, flags=re.DOTALL)
         text = re.sub(r"\n{3,}", "\n\n", text)
         return text.strip(), thinking
+    
+
+        # Add this method to the DocumentProcessor class
+    def generate_summary(self, documents: List[Document]) -> str:
+        """Generate a summary of the documents"""
+        if not documents:
+            return "No content to summarize."
+        
+        # Combine all document content, but limit to avoid token limits
+        combined_text = " ".join([doc.page_content for doc in documents])
+        # Limit to approximately 4000 chars to avoid token limits
+        if len(combined_text) > 4000:
+            combined_text = combined_text[:4000] + "..."
+        
+        summary_prompt = ChatPromptTemplate.from_template("""
+        <think>
+        You're tasked with summarizing the following content. First, identify the main topic, key points, 
+        and important information. Focus on factual content and core concepts.
+        </think>
+        
+        CONTENT:
+        {text}
+        
+        TASK:
+        Create a concise summary (3-5 sentences) of the above content that captures:
+        - The main subject/topic
+        - Key points and findings
+        - Important concepts or conclusions
+        
+        Make the summary informative yet brief.
+        """)
+        
+        chain = summary_prompt | llm
+        result = chain.invoke({"text": combined_text})
+        clean_content, _ = self.clean_thinking(result)
+        return clean_content
 
 # Streamlit interface
 def main():
-    st.title("PDF/URL/Youtube Question Answering System")
+
+    st.title("RAG Question Answering System")
     
     st.sidebar.title("Content Source")
     input_type = st.sidebar.radio("Choose Input Type", ["URL", "PDF", "Youtube"])
+
+    if 'all_documents' not in st.session_state:
+        st.session_state.all_documents = []
+
+    if 'content_summaries' not in st.session_state:
+        st.session_state.content_summarises = []
     
+    if 'indexed' not in st.session_state:
+        st.session_state.indexed = False
+
+    if 'last_input_type' not in st.session_state or st.session_state.last_input_type != input_type:
+        st.session_state.all_documents = []
+        st.session_state.content_summaries = []
+        st.session_state.indexed = False
+        st.session_state.last_input_type = input_type
+
     processor = DocumentProcessor()
-    
-    # Hold documents to index
-    all_documents = []
+
     
     if input_type == "URL":
         urls = []
@@ -276,8 +327,15 @@ def main():
             for url in urls:
                 with st.spinner(f"Processing URL: {url}"):
                     docs = processor.process_url(url)
-                    all_documents.extend(docs)
+                    st.session_state.all_documents.extend(docs)
                     st.sidebar.write(f"URL indexed: {url}")
+
+                    # Generate summary for URL
+                    with st.spinner(f"Generating summary for {url}..."):
+                        summary = processor.generate_summary(docs)
+                        st.session_state.content_summaries.append({"type": "URL", "source": url, "summary": summary})
+
+
     elif input_type == "PDF":
         uploaded_files = st.sidebar.file_uploader("Upload File (PDF)", type=["pdf"], accept_multiple_files=True)
         if uploaded_files:
@@ -287,8 +345,13 @@ def main():
                     f.write(uploaded_file.getbuffer())
                 with st.spinner(f"Processing {uploaded_file.name}..."):
                     docs = processor.process_pdf(str(file_path))
-                    all_documents.extend(docs)
+                    st.session_state.all_documents.extend(docs)
                     st.sidebar.write(f"File indexed: {uploaded_file.name}")
+
+                    # Generate summary for URL
+                    with st.spinner(f"Generating summary for {uploaded_file.name}..."):
+                        summary = processor.generate_summary(docs)
+                        st.session_state.content_summaries.append({"type": "PDF", "source": uploaded_file.name, "summary": summary})
 
     elif input_type == "Youtube":
         youtube_urls = []
@@ -301,16 +364,30 @@ def main():
             for youtube_url in youtube_urls:
                 with st.spinner(f"Processing Youtube video: {youtube_url}"):
                     docs = processor.process_youtube(youtube_url)
-                    all_documents.extend(docs)
+                    st.session_state.all_documents.extend(docs)
                     st.sidebar.write(f"Youtube video indexed: {youtube_url}")
+
+                    # Generate summary for Youtube Video
+                    with st.spinner(f"Generating summary for {youtube_url}..."):
+                        summary = processor.generate_summary(docs)
+                        st.session_state.content_summaries.append({"type": "URL", "source": youtube_url, "summary": summary})
     
     # Index all collective documents if any
-    if all_documents:
-        processor.semantic_retriever(all_documents)
-        processor.bm25_retriever(all_documents)
+
+    if st.session_state.all_documents:
+        processor.semantic_retriever(st.session_state.all_documents)
+        processor.bm25_retriever(st.session_state.all_documents)
         processor.create_hybrid_retriever(semantic_weight=0.5, bm25_weight=0.5)
         st.success("All documents processed and indexed!")
         
+        if st.session_state.content_summaries:
+            for item in st.session_state.content_summaries:
+                if item["type"] == "YouTube":
+                    st.markdown(f"**{item['title']}** (YouTube)")
+                else:
+                    st.markdown(f"**{item['source']}** ({item['type']})")
+                st.markdown(item["summary"])
+                st.markdown("---")
     
     # Question answering interface
     question = st.chat_input("Ask a question about the documents")
@@ -344,3 +421,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
