@@ -42,9 +42,10 @@ This project will deliver a web application with the following key features:
 
 **Version 0.4 (Combined Retrieval & Web Testing):** Combined Web and PDF retrieval into a unified system. Added a dedicated Web Retrieval Testing File to specifically test and refine the web retrieval component, ensuring its accuracy and efficiency.
 ![Screenshot 2025-02-06 182859](https://github.com/user-attachments/assets/432fce7a-4250-4333-87c0-f4510f162fe6)
+![Screenshot 2025-02-06 183434](https://github.com/user-attachments/assets/46f00a60-af41-43aa-b4aa-55e4fd8db88e)
 
 **Version 0.5 (Add Summary, Youtube Retrieval, Change retrieval to Hybrid for more accurate retrieval)**:  Implement a feature to generate and display a summary of retrieved content automatically, integrate a YouTube data retrieval function using the YouTube API to gather and analyze comments or video data, and Improve the retrieval system by combining keyword-based and semantic search to enhance the accuracy of retrieved information.
-![Screenshot 2025-02-06 183434](https://github.com/user-attachments/assets/46f00a60-af41-43aa-b4aa-55e4fd8db88e)
+![Screenshot 2025-03-12 220056](https://github.com/user-attachments/assets/b4a06024-f043-4a2f-b8b1-f0181cad3f4c)
 
 **Version 1.0 (Create Dashboard & Notebook Chatbot from Scratch using MERN + Python Stack):** Build a user-friendly dashboard using React to display data and insights, and develop a chatbot using Python to handle user queries, summarize data, and provide recommendations directly from the notebook.
 ![Screenshot 2025-03-24 175234](https://github.com/user-attachments/assets/7bd67c31-a54b-458b-9771-3bc4829b7eeb)
