@@ -1,5 +1,5 @@
 Current State (MERN STACK):
-![image](https://github.com/user-attachments/assets/1df3648f-e006-4de8-ad72-c4e720556fc1)
+![Screenshot 2025-03-24 175234](https://github.com/user-attachments/assets/7bd67c31-a54b-458b-9771-3bc4829b7eeb)
 ![Screenshot 2025-03-24 175318](https://github.com/user-attachments/assets/16c6ba6c-4e28-4dcb-bba9-e194eef5e3e2)
 
 # PDF and Website Chatbot with Retrieval Augmented Generation (RAG)
@@ -47,7 +47,7 @@ This project will deliver a web application with the following key features:
 **Version 0.5 (Add Summary, Youtube Retrieval, Change retrieval to Hybrid for more accurate retrieval)**:  Implement a feature to generate and display a summary of retrieved content automatically, integrate a YouTube data retrieval function using the YouTube API to gather and analyze comments or video data, and Improve the retrieval system by combining keyword-based and semantic search to enhance the accuracy of retrieved information.
 
 **Version 1.0 (Create Dashboard & Notebook Chatbot from Scratch using MERN + Python Stack):** Build a user-friendly dashboard using React to display data and insights, and develop a chatbot using Python to handle user queries, summarize data, and provide recommendations directly from the notebook.
-![image](https://github.com/user-attachments/assets/1df3648f-e006-4de8-ad72-c4e720556fc1)
+![Screenshot 2025-03-24 175234](https://github.com/user-attachments/assets/7bd67c31-a54b-458b-9771-3bc4829b7eeb)
 ![Screenshot 2025-03-24 175318](https://github.com/user-attachments/assets/16c6ba6c-4e28-4dcb-bba9-e194eef5e3e2)
 
 
