@@ -1,0 +1,48 @@
+.theme-toggle {
+    padding: 8px 0;
+  }
+  
+  .theme-toggle h4 {
+    margin: 0 0 12px 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary, #5f6368);
+  }
+  
+  .theme-options {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  .theme-option {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .theme-option:hover {
+    background-color: var(--hover-color, #f1f3f4);
+  }
+  
+  .theme-option.selected {
+    background-color: var(--selected-color, #e8f0fe);
+    color: var(--primary-color, #1a73e8);
+  }
+  
+  .theme-option .material-icon {
+    margin-right: 12px;
+  }
+  
+  .theme-option .check {
+    position: absolute;
+    right: 12px;
+  }
+  
+  .theme-label {
+    flex-grow: 1;
+    font-size: 14px;
+  }

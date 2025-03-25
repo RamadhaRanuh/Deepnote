@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/pages/Dashboard.css';
+import Button from '../components/common/Button';
+import ThemeToogle from '../components/settings/ThemeToggle';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -33,12 +35,10 @@ function Dashboard() {
     <div className="dashboard">
       <header className="dashboard-header">
         <div className="header-left">
-          <h1>DeepNotebook</h1>
+          <h1>DeepNote</h1>
         </div>
         <div className="header-right">
-          <button className="settings-button">
-            <span className="material-icon">settings</span>
-          </button>
+          <Button variant="settings" dropdownContent={<ThemeToogle />}/>
           <div className="user-profile">
             <div className="avatar">UR</div>
           </div>
@@ -47,7 +47,7 @@ function Dashboard() {
 
       <main className="dashboard-content">
         <h1>
-          Welcome to DeepNotebook
+          Welcome to DeepNote
         </h1>
         <div className="notebooks-header">
           <h2>Your notebooks</h2>

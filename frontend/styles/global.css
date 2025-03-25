@@ -1,0 +1,70 @@
+:root {
+  /* Light theme (default) */
+  --primary-color: #1a73e8;
+  --secondary-color: #f1f3f4;
+  --background-color: #ffffff;
+  --surface-color: #ffffff;
+  --hover-color: #f1f3f4;
+  --selected-color: #e8f0fe;
+  --text-primary: #202124;
+  --text-secondary: #5f6368;
+  --border-color: #dadce0;
+  --notebook-card-bg: #ffffff;
+  --card-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+}
+
+/* Dark theme */
+[data-theme='dark'] {
+  --primary-color: #8ab4f8;
+  --secondary-color: #303134;
+  --background-color: #202124;
+  --surface-color: #303134;
+  --hover-color: #3c4043;
+  --selected-color: #3c4043;
+  --text-primary: #e8eaed;
+  --text-secondary: #9aa0a6;
+  --border-color: #5f6368;
+  --notebook-card-bg: #303134;
+  --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.2);
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+}
+
+/* Basic element theme overrides */
+input, textarea, select, button {
+  background-color: var(--surface-color);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+/* Fix any hardcoded colors in the app */
+.dashboard {
+  background-color: var(--background-color) !important;
+  color: var(--text-primary) !important;
+}
+
+.notebook-card {
+  background-color: var(--notebook-card-bg) !important;
+  box-shadow: var(--card-shadow) !important;
+}
+
+.notebook-container, 
+.notebook-sidebar,
+.notebook-main {
+  background-color: var(--background-color) !important;
+  color: var(--text-primary) !important;
+}
+
+.message-input {
+  background-color: var(--surface-color) !important;
+  color: var(--text-primary) !important;
+}

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../../styles/pages/Notebook.css';
+import Button from '../components/common/Button';
 
 interface Message {
   id: string;
@@ -18,7 +19,7 @@ interface Document {
 
 function NoteBook() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+  
   const [isLoading, setIsLoading] = useState(true);
   const [notebookTitle, setNotebookTitle] = useState(id === 'new' ? 'New Notebook' : '');
   const [messages, setMessages] = useState<Message[]>([]);
@@ -131,9 +132,7 @@ function NoteBook() {
     setNotebookTitle(e.target.value);
   };
 
-  const goBack = () => {
-    navigate('/');
-  };
+  
 
   const formatFileSize = (bytes: number): string => {
     if (bytes < 1024) return `${bytes} B`;
@@ -154,10 +153,8 @@ function NoteBook() {
     <div className="notebook-container">
       <div className="notebook-sidebar">
         <div className="sidebar-header">
-          <button className="back-button" onClick={goBack}>
-            <span className="material-icon">arrow_back</span>
-          </button>
-          <h2>DeepNotebook</h2>
+          <Button variant="back"/>
+          <h2>DeepNote</h2>
         </div>
         
         <div className="sidebar-content">
@@ -193,10 +190,7 @@ function NoteBook() {
             onChange={handleFileUpload}
             style={{ display: 'none' }}
           />
-          <label htmlFor="file-upload" className="upload-button">
-            <span className="material-icon">upload_file</span>
-            Upload PDF
-          </label>
+          <Button variant="upload" onClick={() => fileInputRef.current?.click()} />
         </div>
       </div>
       
@@ -258,13 +252,7 @@ function NoteBook() {
               }}
               disabled={isSendingMessage}
             />
-            <button 
-              className="send-button" 
-              onClick={handleSendMessage}
-              disabled={!inputMessage.trim() || isSendingMessage}
-            >
-              <span className="material-icon">send</span>
-            </button>
+            <Button variant="send" onClick={handleSendMessage} disabled={!inputMessage.trim() || isSendingMessage} />
           </div>
         </div>
       </div>
