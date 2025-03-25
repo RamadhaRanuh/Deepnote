@@ -55,14 +55,10 @@ This project will deliver a web application with the following key features:
 
 **Version 1.0.1 (Create UI & Dark Mode Feature)**: Build a user-friendly dashboard and implement darkmode
 <div style="display: flex; justify-content: center; gap: 10px;">
-  <div style="display: flex; justify-content: center; gap: 10px;">
     ![Screenshot 2025-03-25 123939](https://github.com/user-attachments/assets/d460f253-618c-4858-846f-7c8817d3ad8b)
     ![Screenshot 2025-03-25 124059](https://github.com/user-attachments/assets/2bc4a88b-76f3-4dd6-9fae-d6ba98a78b37)
-  </div>
-  <div style="display: flex; justify-content: center; gap: 10px;">
     ![Screenshot 2025-03-25 124109](https://github.com/user-attachments/assets/54a49bf8-b09f-45b4-9df3-9869a97d1b45)
     ![Screenshot 2025-03-25 124129](https://github.com/user-attachments/assets/8517d46e-d876-4131-b582-6f965e9558d7)
-  </div>
 </div>
 
 
