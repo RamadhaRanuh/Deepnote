@@ -1,6 +1,8 @@
 Current State (MERN STACK):
-![Screenshot 2025-03-24 175234](https://github.com/user-attachments/assets/7bd67c31-a54b-458b-9771-3bc4829b7eeb)
-![Screenshot 2025-03-24 175318](https://github.com/user-attachments/assets/16c6ba6c-4e28-4dcb-bba9-e194eef5e3e2)
+<div style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
+    <img src="https://github.com/user-attachments/assets/001684b8-f7cb-4865-938b-3216055486df" alt="Screenshot 3" style="max-width: 45%; height: auto;" />
+    <img src="https://github.com/user-attachments/assets/d6f845ec-415e-4c4a-bbf8-f53969df2e9a" alt="Screenshot 4" style="max-width: 45%; height: auto;" />
+</div>
 
 # PDF and Website Chatbot with Retrieval Augmented Generation (RAG)
 
@@ -48,21 +50,11 @@ This project will deliver a web application with the following key features:
 ![Screenshot 2025-03-12 220056](https://github.com/user-attachments/assets/b4a06024-f043-4a2f-b8b1-f0181cad3f4c)
 
 **Version 1.0 (Create Dashboard & Notebook Chatbot from Scratch using MERN + Python Stack):** Build a user-friendly dashboard using React to display data and insights, and develop a chatbot using Python to handle user queries, summarize data, and provide recommendations directly from the notebook.
-<div style="display: flex; justify-content: center; gap: 10px;">
-    <img src="https://github.com/user-attachments/assets/7bd67c31-a54b-458b-9771-3bc4829b7eeb" alt="Screenshot 1" width="45%" />
-    <img src="https://github.com/user-attachments/assets/16c6ba6c-4e28-4dcb-bba9-e194eef5e3e2" alt="Screenshot 2" width="45%" />
-</div>
-
-**Version 1.0.1 (Create UI & Dark Mode Feature)**: Build a user-friendly dashboard and implement darkmode
-<div style="display: flex; justify-content: center; gap: 10px;">
-    <img src="https://github.com/user-attachments/assets/d38dcdb7-3555-4dfc-8c15-2a0fc914c487" alt="Screenshot 1" style="max-width: 45%; height: auto;" />
-    <img src="https://github.com/user-attachments/assets/daefe674-fe9b-448c-8871-b146e451ebb3" alt="Screenshot 2" style="max-width: 45%; height: auto;" />
-</div>
-
 <div style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
     <img src="https://github.com/user-attachments/assets/001684b8-f7cb-4865-938b-3216055486df" alt="Screenshot 3" style="max-width: 45%; height: auto;" />
     <img src="https://github.com/user-attachments/assets/d6f845ec-415e-4c4a-bbf8-f53969df2e9a" alt="Screenshot 4" style="max-width: 45%; height: auto;" />
 </div>
+
 
 
 
