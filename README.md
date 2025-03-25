@@ -54,15 +54,11 @@ This project will deliver a web application with the following key features:
 </div>
 
 **Version 1.0.1 (Create UI & Dark Mode Feature)**: Build a user-friendly dashboard and implement darkmode
-<div style="display: flex; justify-content: center; gap: 10px;">
-    <img src="https://raw.githubusercontent.com/user-attachments/assets/d460f253-618c-4858-846f-7c8817d3ad8b" alt="Screenshot 1" style="max-width: 45%; height: auto;" />
-    <img src="https://raw.githubusercontent.com/user-attachments/assets/2bc4a88b-76f3-4dd6-9fae-d6ba98a78b37" alt="Screenshot 2" style="max-width: 45%; height: auto;" />
-</div>
+![Screenshot 2025-03-25 123939](https://github.com/user-attachments/assets/d38dcdb7-3555-4dfc-8c15-2a0fc914c487)
+![Screenshot 2025-03-25 124059](https://github.com/user-attachments/assets/daefe674-fe9b-448c-8871-b146e451ebb3)
+![Screenshot 2025-03-25 124109](https://github.com/user-attachments/assets/001684b8-f7cb-4865-938b-3216055486df)
+![Screenshot 2025-03-25 124129](https://github.com/user-attachments/assets/d6f845ec-415e-4c4a-bbf8-f53969df2e9a)
 
-<div style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
-    <img src="https://raw.githubusercontent.com/user-attachments/assets/54a49bf8-b09f-45b4-9df3-9869a97d1b45" alt="Screenshot 3" style="max-width: 45%; height: auto;" />
-    <img src="https://raw.githubusercontent.com/user-attachments/assets/8517d46e-d876-4131-b582-6f965e9558d7" alt="Screenshot 4" style="max-width: 45%; height: auto;" />
-</div>
 
 
 
