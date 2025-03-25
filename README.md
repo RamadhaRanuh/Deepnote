@@ -48,8 +48,24 @@ This project will deliver a web application with the following key features:
 ![Screenshot 2025-03-12 220056](https://github.com/user-attachments/assets/b4a06024-f043-4a2f-b8b1-f0181cad3f4c)
 
 **Version 1.0 (Create Dashboard & Notebook Chatbot from Scratch using MERN + Python Stack):** Build a user-friendly dashboard using React to display data and insights, and develop a chatbot using Python to handle user queries, summarize data, and provide recommendations directly from the notebook.
-![Screenshot 2025-03-24 175234](https://github.com/user-attachments/assets/7bd67c31-a54b-458b-9771-3bc4829b7eeb)
-![Screenshot 2025-03-24 175318](https://github.com/user-attachments/assets/16c6ba6c-4e28-4dcb-bba9-e194eef5e3e2)
+<div style="display: flex; justify-content: center; gap: 10px;">
+    <img src="https://github.com/user-attachments/assets/7bd67c31-a54b-458b-9771-3bc4829b7eeb" alt="Screenshot 1" width="45%" />
+    <img src="https://github.com/user-attachments/assets/16c6ba6c-4e28-4dcb-bba9-e194eef5e3e2" alt="Screenshot 2" width="45%" />
+</div>
+
+**Version 1.0.1 (Create UI & Dark Mode Feature)**: Build a user-friendly dashboard and implement darkmode
+<div style="display: flex; justify-content: center; gap: 10px;">
+  <div style="display: flex; justify-content: center; gap: 10px;">
+    ![Screenshot 2025-03-25 123939](https://github.com/user-attachments/assets/d460f253-618c-4858-846f-7c8817d3ad8b)
+    ![Screenshot 2025-03-25 124059](https://github.com/user-attachments/assets/2bc4a88b-76f3-4dd6-9fae-d6ba98a78b37)
+  </div>
+  <div style="display: flex; justify-content: center; gap: 10px;">
+    ![Screenshot 2025-03-25 124109](https://github.com/user-attachments/assets/54a49bf8-b09f-45b4-9df3-9869a97d1b45)
+    ![Screenshot 2025-03-25 124129](https://github.com/user-attachments/assets/8517d46e-d876-4131-b582-6f965e9558d7)
+  </div>
+</div>
+
+
 
 
 
