@@ -35,20 +35,15 @@ This project will deliver a web application with the following key features:
 * **(Other libraries as needed for vector databases, embeddings, etc.)**
 
 ## Documentation (Tentative)
-**Version 0.1 (Initial Setup):**  Project initialization and basic structure.
-
-**Version 0.2 (Model Completion & Deployment):**  Finished the core RAG model and deployed the application using Streamlit.
-![Screenshot 2025-02-05 232033](https://github.com/user-attachments/assets/229171b3-31d5-4d7a-8ad0-893973f97e87)
-
-**Version 0.3 (Feature Enhancement & Testing):** Added a success notification when data has been successfully indexed. Implemented a test RAG module for evaluating retrieval performance.  This allows for more rigorous testing and ensures the retrieval component is functioning correctly.
-
-**Version 0.4 (Combined Retrieval & Web Testing):** Combined Web and PDF retrieval into a unified system. Added a dedicated Web Retrieval Testing File to specifically test and refine the web retrieval component, ensuring its accuracy and efficiency.
-![Screenshot 2025-02-06 182859](https://github.com/user-attachments/assets/432fce7a-4250-4333-87c0-f4510f162fe6)
-![Screenshot 2025-02-06 183434](https://github.com/user-attachments/assets/46f00a60-af41-43aa-b4aa-55e4fd8db88e)
-
-**Version 0.5 (Add Summary, Youtube Retrieval, Change retrieval to Hybrid for more accurate retrieval)**:  Implement a feature to generate and display a summary of retrieved content automatically, integrate a YouTube data retrieval function using the YouTube API to gather and analyze comments or video data, and Improve the retrieval system by combining keyword-based and semantic search to enhance the accuracy of retrieved information.
+### Deprecated Version:
+- **Version 0.1 (Initial Setup):**  Project initialization and basic structure.
+- **Version 0.2 (Model Completion & Deployment):**  Finished the core RAG model and deployed the application using Streamlit.
+- **Version 0.3 (Feature Enhancement & Testing):** Added a success notification when data has been successfully indexed. Implemented a test RAG module for evaluating retrieval performance.  This allows for more rigorous testing and ensures the retrieval component is functioning correctly.
+- **Version 0.4 (Combined Retrieval & Web Testing):** Combined Web and PDF retrieval into a unified system. Added a dedicated Web Retrieval Testing File to specifically test and refine the web retrieval component, ensuring its accuracy and efficiency.
+- **Version 0.5 (Add Summary, Youtube Retrieval, Change retrieval to Hybrid for more accurate retrieval)**:  Implement a feature to generate and display a summary of retrieved content automatically, integrate a YouTube data retrieval function using the YouTube API to gather and analyze comments or video data, and Improve the retrieval system by combining keyword-based and semantic search to enhance the accuracy of retrieved information.
 ![Screenshot 2025-03-12 220056](https://github.com/user-attachments/assets/b4a06024-f043-4a2f-b8b1-f0181cad3f4c)
 
+### New Version:
 **Version 1.0 (Create Dashboard & Notebook Chatbot from Scratch using MERN + Python Stack):** Build a user-friendly dashboard using React to display data and insights, and develop a chatbot using Python to handle user queries, summarize data, and provide recommendations directly from the notebook.
 <div style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
     <img src="https://github.com/user-attachments/assets/001684b8-f7cb-4865-938b-3216055486df" alt="Screenshot 3" style="max-width: 45%; height: auto;" />
